@@ -54,7 +54,6 @@
 
     socket.onopen = function(e) {
         console.log("[open] Соединение установлено");
-        console.log("Отправляем данные на сервер");
     };
 
     socket.onmessage = function(event) {

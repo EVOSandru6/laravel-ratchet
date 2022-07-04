@@ -33,12 +33,18 @@ Route::get('/orders', function () {
 Route::post('/order', function (Request $request) {
     // ifconfig | grep 192
     $client = new WebSocket\Client("ws://192.168.2.42:8080");
+
+    $client->text(json_encode(['message' => 'new room', 'value' => 'one']));
+
     $data = [
-        'name' => $request['name'],
-        'product' => $request['product'],
+        'message' => 'new order',
+        'value' => [
+            'name' => $request['name'],
+            'product' => $request['product'],
+        ]
     ];
     $client->text(json_encode($data));
-    $client->receive();
+    // $client->receive(); т.к. ничего не приходит
     $client->close();
     return response()->redirectTo('/order');
 })->name('order.store');

@@ -50,7 +50,9 @@
 
     socket.onopen = function(e) {
         console.log("[open] Соединение установлено");
-        console.log("Отправляем данные на сервер");
+
+        let message = JSON.stringify({message: 'new room', value: 'one'})
+        socket.send(message)
     };
 
     socket.onmessage = function(event) {
