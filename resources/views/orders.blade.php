@@ -58,12 +58,17 @@
     socket.onmessage = function(event) {
         console.log(`[message] Данные получены с сервера: ${event.data}`);
 
-        let json = JSON.parse(event.data)
+        let data = JSON.parse(event.data)
+
+        if(data.message !== 'new order') {
+            return
+        }
+
         let orders = document.getElementById('orders')
         let order = '' +
             '<div class="order">' +
-            `<p>${json.name}</p>` +
-            `<p>${json.product}</p>` +
+            `<p>${data.value.name}</p>` +
+            `<p>${data.value.product}</p>` +
             '</div>'
 
         console.log('order', order)
