@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,24 @@ Route::get('/', function () {
 Route::get('/test', function () {
     return view('test');
 });
+
+Route::get('/order', function () {
+    return view('order');
+});
+
+Route::get('/orders', function () {
+    return view('orders');
+});
+
+Route::post('/order', function (Request $request) {
+    // ifconfig | grep 192
+    $client = new WebSocket\Client("ws://192.168.2.42:8080");
+    $data = [
+        'name' => $request['name'],
+        'product' => $request['product'],
+    ];
+    $client->text(json_encode($data));
+    $client->receive();
+    $client->close();
+    return response()->redirectTo('/order');
+})->name('order.store');

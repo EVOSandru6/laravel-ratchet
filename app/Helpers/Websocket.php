@@ -31,9 +31,10 @@ class Websocket implements MessageComponentInterface
         echo sprintf('Connection %d sending message "%s" to %d other connection %s' . "\n", $from->resourceId, $msg, $numRecv, $numRecv === 1);
 
         foreach ($this->clients as $client) {
-            if ($from != $client) {
+            // Закоменчено для демонстрации в одном браузере на разных страницах
+            // if ($from != $client) {
                 $client->send($msg);
-            }
+            // }
         }
     }
 
