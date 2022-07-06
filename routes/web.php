@@ -48,3 +48,28 @@ Route::post('/order', function (Request $request) {
     $client->close();
     return response()->redirectTo('/order');
 })->name('order.store');
+
+Route::get('/rooms', function () {
+    return view('rooms');
+});
+
+Route::get('/room', function (Request $request) {
+    $id = (int)$request->input('id');
+    $name = $request->input('name');
+
+    if(!$request->input('name')) {
+        throw new DomainException('name undefined');
+    }
+
+    $room_name = match ($id) {
+        1 => 'one',
+        2 => 'two',
+        3 => 'three',
+    };
+
+    return view('room', [
+        'id' => $id,
+        'room_name' => $room_name,
+        'name' => $name
+    ]);
+});
